@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import Menus from './Components/Menus';
 import Menu from './Components/Menu';
-import { Container, } from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 import MenuForm from './Components/MenuForm';
 
 
@@ -13,9 +13,6 @@ class App extends Component {
     axios.get("/api/menus")
       .then(res => {
         this.setState({ menus: res.data, });
-      })
-      .catch(err => {
-        console.log(err);
       })
   }
 
@@ -29,9 +26,18 @@ class App extends Component {
 
 
   updateMenu = (id) => {
-    // TODO make api call to update todo
-    // TODO update state
+  axios.put(`/api/items/${id}`)
+    .then( res => {
+      const menus = this.state.menus.map( t => {
+        if (m.id === id)
+        return res.data;
+        return m;
+      })
+      this.setState({ menus, });
+    })
   }
+
+
 
   deleteMenu = (id) => {
     // TODO make api call to delete todo
@@ -42,21 +48,27 @@ class App extends Component {
 
   render() {
     return (
-      <Container style={{ padding: "30px 0",}}>
-        <h1 style={{ padding: "10px", display: "flex", justifyContent: 'center' }}>
-          <i>Welcome to Harlans Cafe</i>
-        </h1>
+      <Container style={{ padding: "30px 0", fontFamily: 'Noto Serif TC', }}>
+          <Header as='h1' 
+          style={{ padding: "10px", display: "flex", justifyContent: 'center', fontFamily: 'Noto Serif TC', }}>
+          Welcome to Harlans Cafe
+        </Header>
+
         <MenuForm add={this.addMenu} />
         <br />
         <br />
-        <h1>
-          <i>Menus</i>
-          </h1>
-        <Menus 
-        menu={this.state.menus} 
-        add={this.addMenu} 
-        delete={this.deleteMenu} 
+        
+        <Header as='h3' 
+        style={{ padding: "10px", display: "flex", justifyContent: 'center', fontFamily: 'Noto Serif TC', }}>
+          Menus
+          </Header>
+        
+        <Menus
+        list={this.state.menus} 
+        update={this.updateMenu} 
+        destroy={this.deleteMenu} 
         />
+        
         <br />
         <br />
       </Container>

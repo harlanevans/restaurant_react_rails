@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 
 class MenuForm extends React.Component {
-  state = { meal: '', };
+  state = { meal: " ", };
 
 
   handleSubmit = (e) => {
@@ -25,6 +25,10 @@ class MenuForm extends React.Component {
           value={this.state.meal}
           onChange={this.handleChange}
         />
+        <Button 
+        basic color='blue'>
+          Add New Menu
+        </Button>
       </Form>
     )
   }

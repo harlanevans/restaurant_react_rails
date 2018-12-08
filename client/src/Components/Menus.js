@@ -1,14 +1,14 @@
 import React from 'react';
 import Menu from './Menu';
 
-const Menus = () => ({ menu, add, destroy }) => (
+const Menus = ({ list, update, destroy }) => (
   <div>
     {
-      menu.map( thing => (
+      list.map( item => (
         <Menu 
-        key={thing.id}
-        {...thing} 
-        add={add}
+        key={item.id}
+        {...item} 
+        update={update}
         delete={destroy}
         />
       ))
